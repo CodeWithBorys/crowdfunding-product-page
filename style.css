@@ -16,7 +16,6 @@ body {
   font-family: 'Commissioner', sans-serif;
   font-size: 16px;
   position: relative;
-  width: 100vw;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent 150px),
     url('/images/image-hero-desktop.jpg'), #eee;
   background-repeat: no-repeat;
@@ -65,7 +64,7 @@ nav {
 }
 
 .hidden {
-  display: none;
+  display: none !important;
 }
 
 main {
@@ -121,6 +120,10 @@ h1 {
 
 .btn:hover {
   background: var(--dark-cyan);
+}
+
+.btn:active {
+  transform: scale(0.98);
 }
 
 .bookmark {
@@ -260,11 +263,15 @@ p.option__start-price {
 }
 
 .option.out-of-stock .option__orders-left span,
-.option.out-of-stock h3 {
+.option.out-of-stock h3,
+.option-reward.out-of-stock h3,
+.option-reward.out-of-stock span,
+.option-reward.out-of-stock .option__start-price {
   color: var(--gray);
 }
 
-.option.out-of-stock::after {
+.option.out-of-stock::after,
+.option-reward.out-of-stock::after {
   content: '';
   width: 100%;
   height: 100%;
@@ -274,4 +281,189 @@ p.option__start-price {
   z-index: 100;
   backdrop-filter: grayscale(1);
   cursor: not-allowed;
+}
+
+.overlay {
+  position: absolute;
+  z-index: 30;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  /* backdrop-filter: blur(3px); */
+  background: var(--gray);
+}
+
+.modal {
+  width: 730px;
+  display: flex;
+  flex-direction: column;
+  margin: 5rem auto 0;
+  padding: 45px;
+  background: #fff;
+  border-radius: 10px;
+  border: 1px solid #ddd;
+  position: relative;
+}
+.modal p {
+  color: var(--gray);
+}
+
+.modal > p {
+  margin-bottom: 30px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 1.2rem;
+  color: var(--gray);
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
+.close:active {
+  transform: scale(0.95);
+}
+
+.option-reward {
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  margin: 10px 0;
+  position: relative;
+}
+
+.option-reward input[type='radio'] {
+  display: none;
+}
+
+.option-reward .option__preview {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  grid-template-rows: 50px 1fr;
+  grid-template-areas:
+    'heading price orders-left'
+    'description description description';
+  align-items: center;
+  padding: 10px 30px 25px 80px;
+}
+
+.option-reward:first-of-type .option__preview {
+  grid-template-columns: 1fr;
+}
+
+.option-reward__heading {
+  grid-area: heading;
+  align-items: center;
+  display: flex;
+  position: relative;
+  font-size: 1.1rem;
+}
+
+.option-reward__heading * {
+  font-size: 1.1rem;
+}
+
+.option-reward .option__start-price {
+  color: var(--cyan);
+  padding-left: 20px;
+  font-size: 1rem;
+}
+.option-reward .option__orders-left {
+  grid-area: orders-left;
+  justify-self: end;
+}
+
+.option-reward .option__description {
+  grid-area: description;
+  line-height: 1.75rem;
+  text-align: justify;
+}
+
+.option-reward .option__orders-left span {
+  font-size: 1.1rem;
+}
+
+.option-reward .option__preview {
+  cursor: pointer;
+}
+
+.option-reward .option__order {
+  display: none;
+}
+
+/* custom radio button */
+.option-reward .option__preview h3:before {
+  content: '';
+  width: 20px;
+  height: 20px;
+  border: 1px solid #ddd;
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: -50px;
+  transform: translateY(-50%);
+}
+
+/* active option */
+
+.option-reward.active {
+  border: 2px solid var(--cyan);
+}
+
+.option-reward.active .option__preview h3:after {
+  content: '';
+  width: 12px;
+  height: 12px;
+  background: var(--cyan);
+  border-radius: 50%;
+  position: absolute;
+  top: 50%;
+  left: -45px;
+  transform: translateY(-50%);
+}
+
+.option-reward.active .option__order {
+  border-top: 1px solid #ddd;
+  display: flex;
+  align-items: center;
+  padding: 25px 30px;
+}
+
+.option-reward.active .option__order-input {
+  margin-left: auto;
+  position: relative;
+}
+
+.option-reward.active .option__order input {
+  width: 100px;
+  margin-right: 10px;
+  outline: none;
+  padding: 15px 10px 15px 35px;
+  font-weight: 900;
+  border-radius: 50px;
+  border: 1px solid #ddd;
+}
+
+.option-reward.active .option__order-input .fa-dollar-sign {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 20px;
+  color: var(--gray);
+}
+
+.option-reward.active .option__order {
+  visibility: visible;
+  height: 100%;
+}
+
+.modal .option-reward .btn {
+  padding: 15px 23px;
+  font-size: 14px;
+  font-weight: 600;
 }
