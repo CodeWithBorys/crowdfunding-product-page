@@ -290,8 +290,7 @@ p.option__start-price {
   height: 100%;
   top: 0;
   left: 0;
-  /* backdrop-filter: blur(3px); */
-  background: var(--gray);
+  backdrop-filter: brightness(0.3);
 }
 
 .modal {
@@ -466,4 +465,30 @@ p.option__start-price {
   padding: 15px 23px;
   font-size: 14px;
   font-weight: 600;
+}
+
+/* thanks modal */
+.modal#thanks {
+  max-width: 540px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal#thanks h2 {
+  margin: 30px 0 20px;
+  font-size: 1.5rem;
+}
+
+.modal#thanks p {
+  line-height: 2rem;
+  text-align: center;
+}
+
+.modal#thanks .btn {
+  padding: 17px 35px;
+  font-weight: 700;
+  font-size: 0.8rem;
+  letter-spacing: 1px;
 }
