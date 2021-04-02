@@ -359,6 +359,10 @@ p.option__start-price {
   grid-template-columns: 1fr;
 }
 
+.option-reward:first-of-type .btn {
+  margin-left: auto;
+}
+
 .option-reward__heading {
   grid-area: heading;
   align-items: center;
