@@ -132,7 +132,6 @@ h1 {
   color: var(--gray);
   font-size: 16px;
   font-weight: 600;
-  width: 170px;
   height: 60px;
   border-radius: 30px;
   cursor: pointer;
@@ -140,6 +139,7 @@ h1 {
   align-items: center;
   justify-content: flex-end;
   padding-right: 25px;
+  padding-left: 70px;
   background: url('/images/icon-bookmark.svg'), #ddd;
   background-repeat: no-repeat;
   background-position: center left;
@@ -297,12 +297,16 @@ p.option__start-price {
   width: 730px;
   display: flex;
   flex-direction: column;
-  margin: 5rem auto 0;
+  margin-top: 5rem;
   padding: 45px;
   background: #fff;
   border-radius: 10px;
   border: 1px solid #ddd;
-  position: relative;
+  position: absolute;
+  z-index: 50;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .modal p {
   color: var(--gray);
