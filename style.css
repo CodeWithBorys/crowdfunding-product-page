@@ -492,3 +492,40 @@ p.option__start-price {
   font-size: 0.8rem;
   letter-spacing: 1px;
 }
+
+/* attribution */
+.attribution {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.attribution a {
+  text-decoration: none;
+  color: #fff;
+  position: relative;
+  padding: 5px 10px;
+}
+
+.attribution a::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: var(--dark-cyan);
+  z-index: -1;
+  transform: skewX(-20deg);
+  transition: 0.3s ease;
+  will-change: transform;
+}
+
+.attribution a:hover {
+  color: var(--dark-cyan);
+}
+
+.attribution a:hover::before {
+  transform: skewX(0deg);
+  border: 1px solid var(--dark-cyan);
+  background: transparent;
+}
