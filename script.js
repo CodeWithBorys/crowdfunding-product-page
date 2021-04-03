@@ -12,6 +12,9 @@ const blackEditionRewardOption = document.getElementById('black-edition');
 const mahoganyRewardOption = document.getElementById('mahogany-edition');
 const selectRewardBtns = document.querySelectorAll('.option .btn');
 const rewardOptions = document.querySelectorAll('.option-reward');
+const totalSum = document.querySelector('.stats__sum--collected');
+const backers = document.querySelector('.stats__backers--num');
+const days = document.querySelector('.stats__days--num');
 
 const state = {
   bambooStand: 101,
@@ -48,11 +51,33 @@ rewardOptions.forEach((rewardOption) => {
 
   // add eventListener for confirm buttons
   rewardOption.querySelector('.btn').addEventListener('click', function () {
+    const reward = Number(
+      rewardOption.querySelector('input[type="number"]').value
+    );
+    state.sum += reward;
+    state.backers++;
+    totalSum.textContent = `$${state.sum.toLocaleString()}`;
+    backers.textContent = state.backers.toLocaleString();
     supportModal.classList.add('hidden');
     thanksModal.classList.remove('hidden');
     window.scrollTo(0, 0);
   });
 });
+
+// update how many days left
+let daysLeft = setInterval(() => {
+  days.textContent = state.days;
+  state.days--;
+}, 86400000);
+
+setTimeout(() => {
+  clearInterval(daysLeft);
+  days.textContent = state.days;
+}, 86400000 * state.days);
+
+function update() {
+  checkIfAvailable();
+}
 
 // remove active class from reward options
 function deactivateOptions() {
@@ -101,5 +126,3 @@ function makeUnavailable(option, rewardOption) {
   rewardOption.parentNode.classList.add('out-of-stock');
   option.querySelector('.btn').textContent = 'Out of stock';
 }
-
-checkIfAvailable();
