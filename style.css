@@ -363,6 +363,9 @@ p.option__start-price {
   margin-left: auto;
 }
 
+.option-reward:first-of-type .option__order-input {
+  display: none;
+}
 .option-reward__heading {
   grid-area: heading;
   align-items: center;

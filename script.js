@@ -15,6 +15,7 @@ const rewardOptions = document.querySelectorAll('.option-reward');
 const totalSum = document.querySelector('.stats__sum--collected');
 const backers = document.querySelector('.stats__backers--num');
 const days = document.querySelector('.stats__days--num');
+const progressBar = document.querySelector('.progress');
 
 const state = {
   bambooStand: 101,
@@ -23,8 +24,11 @@ const state = {
   sum: 89914,
   backers: 5007,
   days: 56,
+  targetSum: 100000,
 };
 
+update();
+// handle bookmark button
 bookmarkBtn.addEventListener('click', function () {
   this.classList.toggle('active');
   this.textContent = this.classList.contains('active')
@@ -45,7 +49,10 @@ thanksModal.querySelector('.btn').addEventListener('click', closeModals);
 rewardOptions.forEach((rewardOption) => {
   rewardOption.addEventListener('click', function () {
     deactivateOptions();
-    if (this.querySelector('input[type="radio"]').checked)
+    if (
+      this.querySelector('input[type="radio"]').checked &&
+      !this.querySelector('input[type="radio"]').disabled
+    )
       this.classList.add('active');
   });
 
@@ -58,6 +65,8 @@ rewardOptions.forEach((rewardOption) => {
     state.backers++;
     totalSum.textContent = `$${state.sum.toLocaleString()}`;
     backers.textContent = state.backers.toLocaleString();
+    updateLeftStands(rewardOption);
+    update();
     supportModal.classList.add('hidden');
     thanksModal.classList.remove('hidden');
     window.scrollTo(0, 0);
@@ -75,15 +84,46 @@ setTimeout(() => {
   days.textContent = state.days;
 }, 86400000 * state.days);
 
+// initial and onchange update
 function update() {
   checkIfAvailable();
+  updateProgressBar();
+  displayLeftStands();
 }
 
+// update progress bar
+function updateProgressBar() {
+  let percentage = Math.trunc((state.sum * 100) / state.targetSum);
+  progressBar.style.width = percentage >= 100 ? '100%' : `${percentage}%`;
+}
+
+// update quantity of stands
+function updateLeftStands(confirmedOption) {
+  if (confirmedOption.querySelector('input').id === 'bamboo')
+    state.bambooStand--;
+  if (confirmedOption.querySelector('input').id === 'black-edition')
+    state.blackEdition--;
+  if (confirmedOption.querySelector('input').id === 'mahogany-edition')
+    state.mahoganyEdition--;
+}
+
+function displayLeftStands() {
+  function displayStands(el, num) {
+    el.querySelector('span').textContent = num;
+  }
+  displayStands(bambooOption, state.bambooStand);
+  displayStands(bambooRewardOption.parentNode, state.bambooStand);
+  displayStands(blackEditionOption, state.blackEdition);
+  displayStands(blackEditionRewardOption.parentNode, state.blackEdition);
+  displayStands(mahoganyOption, state.mahoganyEdition);
+  displayStands(mahoganyRewardOption.parentNode, state.mahoganyEdition);
+}
 // remove active class from reward options
 function deactivateOptions() {
   rewardOptions.forEach((option) => option.classList.remove('active'));
 }
 
+// show modal with offset to selected option
 function showModal(e) {
   overlayForModals.classList.remove('hidden');
   supportModal.classList.remove('hidden');
@@ -113,6 +153,7 @@ function closeModals() {
   deactivateOptions();
 }
 
+// handle out-of-stock options
 function checkIfAvailable() {
   if (state.bambooStand == 0) makeUnavailable(bambooOption, bambooRewardOption);
   if (state.blackEdition == 0)
@@ -124,5 +165,6 @@ function checkIfAvailable() {
 function makeUnavailable(option, rewardOption) {
   option.classList.add('out-of-stock');
   rewardOption.parentNode.classList.add('out-of-stock');
+  rewardOption.disabled = true;
   option.querySelector('.btn').textContent = 'Out of stock';
 }
