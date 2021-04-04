@@ -1,4 +1,5 @@
 const bookmarkBtn = document.querySelector('.bookmark');
+const bookmarkMobileBtn = document.querySelector('.bookmark-mobile');
 const backProjectBtnTop = document.querySelector('.heading__action .btn');
 const overlayForModals = document.querySelector('.overlay');
 const supportModal = document.getElementById('support-options');
@@ -16,6 +17,8 @@ const totalSum = document.querySelector('.stats__sum--collected');
 const backers = document.querySelector('.stats__backers--num');
 const days = document.querySelector('.stats__days--num');
 const progressBar = document.querySelector('.progress');
+const mobileMenuToggle = document.querySelector('.mobile-nav');
+const nav = document.querySelector('nav');
 
 const state = {
   bambooStand: 101,
@@ -36,6 +39,14 @@ bookmarkBtn.addEventListener('click', function () {
     : 'Bookmark';
 });
 
+bookmarkMobileBtn.addEventListener('click', function () {
+  this.classList.toggle('active');
+});
+// mobile menu
+mobileMenuToggle.addEventListener('click', function () {
+  if (document.querySelector('#menu-toggle').checked)
+    nav.classList.toggle('active');
+});
 // back project buttons functionality - show modal
 backProjectBtnTop.addEventListener('click', showModal);
 selectRewardBtns.forEach((btn) => btn.addEventListener('click', showModal));
